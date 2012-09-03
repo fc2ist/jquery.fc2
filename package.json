@@ -1,0 +1,14 @@
+{
+  "name": "jquery.fc2",
+  "title": "jQuery FC2 Plugin",
+  "version": "0.1.2",
+  "homepage": "http://fc2ist.blog.fc2.com/",
+  "author": {
+    "name": "@moi_fc2"
+  },
+  "licenses": [
+    {
+      "type": "MIT"
+    }
+  ]
+}
