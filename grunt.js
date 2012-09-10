@@ -16,11 +16,13 @@ module.exports = function(grunt) {
       'a': {
         dest: 'src/_tmp.coffee',
         src: [
+          "src/header.coffee",
           'src/jquery.fc2.coffee',
           'src/eyecatch.coffee',
           'src/pager.coffee',
           'src/scroll.coffee',
-          'src/lightbox.coffee'
+          'src/lightbox.coffee',
+          "src/footer.coffee"
         ]
       },
       'b': {
@@ -33,7 +35,7 @@ module.exports = function(grunt) {
       files: [
         'src/*.coffee'
       ],
-      tasks: 'concat:a coffee concat:b min clean growl:complete'
+      tasks: 'concat:a coffee clean concat:b min growl:complete'
     },
     
     min: {
@@ -41,9 +43,11 @@ module.exports = function(grunt) {
     },
     
     coffee: {
-      compile: {
-        files: {
-          'jquery_fc2.js': 'src/_tmp.coffee'
+      dist: {
+        src: ['src/_tmp.coffee'],
+        dest: 'jquery_fc2.js',
+        options: {
+          bare: true
         }
       }
     },

@@ -1,10 +1,10 @@
-/*! jQuery FC2 Plugin - v0.1.2 - 2012-09-03
+/*! jQuery FC2 Plugin - v0.1.3 - 2012-09-10
 * http://fc2ist.blog.fc2.com/
 * Copyright (c) 2012 @moi_fc2; Licensed MIT */
 
-(function() {
-  var Eyecatch, Lightbox, Pager, Scroll;
 
+(function($) {
+  var Eyecatch, Lightbox, Pager, Scroll;
   $.fn.fc2 = (function() {
 
     function fc2() {
@@ -31,7 +31,6 @@
     return fc2;
 
   })();
-
   $.fc2 = (function() {
 
     function fc2() {
@@ -48,7 +47,6 @@
     return fc2;
 
   })();
-
   Eyecatch = (function() {
     var _build, _defaults, _reg;
 
@@ -65,7 +63,7 @@
     _reg = /(^blog-entry-\d+\.html)|([&\?]?no=\d+)/;
 
     _build = function() {
-      var attr, eno, filename, img, optelem, src, title;
+      var ac, attr, eno, filename, img, link, optelem, src, title;
       if (this.target.data(this.config.dataName + '_on')) {
         return;
       }
@@ -89,6 +87,7 @@
       }
       eno = this.target.data(this.config.enoData);
       title = this.target.data(this.config.titleData);
+      ac = optelem.data('class');
       if ((eno != null) && !_reg.test(filename)) {
         attr = {
           'href': 'blog-entry-' + eno + '.html',
@@ -97,8 +96,14 @@
         if (title != null) {
           attr.title = title;
         }
-        $('<a />').attr(attr).append(img).prependTo(this.target);
+        link = $('<a />').attr(attr).append(img).prependTo(this.target);
+        if (ac) {
+          link.addClass(ac);
+        }
       } else {
+        if (ac) {
+          img.addClass(ac);
+        }
         img.prependTo(this.target);
       }
       if (this.config.fade) {
@@ -116,7 +121,6 @@
     return Eyecatch;
 
   })();
-
   Pager = (function() {
     var _bbq, _build, _defaults, _getURL, _info, _notPage, _notQuery;
 
@@ -245,7 +249,7 @@
         min = current - half + 1;
         max = current + half;
       }
-      ol = $('<ol />');
+      ol = $('<ul />');
       if (this.config.className != null) {
         ol.attr('class', this.config.className);
       }
@@ -313,7 +317,6 @@
     return Pager;
 
   })();
-
   Scroll = (function() {
     var _defaults;
 
@@ -345,8 +348,7 @@
     return Scroll;
 
   })();
-
-  Lightbox = (function() {
+  return Lightbox = (function() {
     var close, open, _build, _createBox, _createOverlay, _defaults, _load, _resize;
 
     _defaults = {
@@ -463,5 +465,4 @@
     return Lightbox;
 
   })();
-
-}).call(this);
+})(jQuery);
