@@ -42,7 +42,7 @@
               if !eyecatch.length then return
               $('img.' + config.className, $item).attr('src', eyecatch.shift())
             )
-          )
+          ).show().addClass('in')
           return self.each(->
             new Eyecatch($(this), config)
           )
