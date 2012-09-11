@@ -43,15 +43,15 @@
           var config;
           config = $.extend(_defaults.eyecatch, options);
           $(config.carousel).each(function() {
-            var $items;
+            var $imagelink, $images, $items;
             $items = $('.item', this);
             $items.eq(0).addClass('active');
-            return $items.each(function() {
+            $items.each(function() {
               var $item, $post, eno, eyecatch, optelem;
               $item = $(this);
               eno = $item.data('target');
               $post = self.filter('[data-eno="' + eno + '"]');
-              if ($post.length) {
+              if (!$post.length) {
                 return;
               }
               optelem = $post.find('[data-' + config.dataName + ']:eq(0)');
@@ -63,6 +63,29 @@
                 return;
               }
               return $('img.' + config.className, $item).attr('src', eyecatch.shift());
+            });
+            $images = $('img.' + config.className, this);
+            $imagelink = $images.parent('a');
+            $images.css({
+              'width': '100%',
+              'height': 'auto',
+              'position': 'absolute'
+            });
+            return $images.imagesLoaded(function() {
+              var maxHeight;
+              maxHeight = 0;
+              $images.each(function() {
+                return maxHeight = Math.max(maxHeight, this.height);
+              });
+              $images.each(function() {
+                var pos;
+                pos = (maxHeight - this.height) / 2;
+                return $(this).css('top', pos + 'px');
+              });
+              return $imagelink.css({
+                'display': 'block',
+                'position': 'relative'
+              }).height(maxHeight);
             });
           }).show().addClass('in');
           return self.each(function() {
@@ -362,9 +385,13 @@
       this.config = config;
       speed = this.config.speed;
       $(document).on('click', 'a[href^=#]', function(event) {
-        var href, position, target;
+        var elem, href, position, target;
         event.preventDefault();
-        href = $(this).attr('href');
+        elem = $(this);
+        if (elem.data('slide')) {
+          return;
+        }
+        href = elem.attr('href');
         target = $(href === '#' ? 'html' : href);
         if (target.length < 1) {
           target = $('html');
@@ -497,3 +524,12 @@
 
   })();
 })(jQuery);
+
+/*!
+ * jQuery imagesLoaded plugin v2.0.1
+ * http://github.com/desandro/imagesloaded
+ *
+ * MIT License. by Paul Irish et al.
+ */
+(function(c,n){var k="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";c.fn.imagesLoaded=function(l){function m(){var b=c(h),a=c(g);d&&(g.length?d.reject(e,b,a):d.resolve(e));c.isFunction(l)&&l.call(f,e,b,a)}function i(b,a){b.src===k||-1!==c.inArray(b,j)||(j.push(b),a?g.push(b):h.push(b),c.data(b,"imagesLoaded",{isBroken:a,src:b.src}),o&&d.notifyWith(c(b),[a,e,c(h),c(g)]),e.length===j.length&&(setTimeout(m),e.unbind(".imagesLoaded")))}var f=this,d=c.isFunction(c.Deferred)?c.Deferred():
+0,o=c.isFunction(d.notify),e=f.find("img").add(f.filter("img")),j=[],h=[],g=[];e.length?e.bind("load.imagesLoaded error.imagesLoaded",function(b){i(b.target,"error"===b.type)}).each(function(b,a){var e=a.src,d=c.data(a,"imagesLoaded");if(d&&d.src===e)i(a,d.isBroken);else if(a.complete&&a.naturalWidth!==n)i(a,0===a.naturalWidth||0===a.naturalHeight);else if(a.readyState||a.complete)a.src=k,a.src=e}):m();return d?d.promise(f):f}})(jQuery);

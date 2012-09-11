@@ -35,12 +35,33 @@
               $item = $(this)
               eno = $item.data('target')
               $post = self.filter('[data-eno="' + eno + '"]')
-              if $post.length then return
+              if !$post.length then return
               optelem = $post.find('[data-' + config.dataName + ']:eq(0)')
               if !optelem.length then return
               eyecatch = optelem.data(config.dataName).split('%%')
               if !eyecatch.length then return
               $('img.' + config.className, $item).attr('src', eyecatch.shift())
+            )
+            $images = $('img.' + config.className, this)
+            $imagelink = $images.parent('a')
+            $images.css(
+              'width': '100%',
+              'height': 'auto',
+              'position': 'absolute'
+            )
+            $images.imagesLoaded(->
+              maxHeight = 0
+              $images.each(->
+                maxHeight = Math.max(maxHeight, this.height)
+              )
+              $images.each(->
+                pos = (maxHeight - this.height)/2
+                $(this).css('top', pos + 'px')
+              )
+              $imagelink.css(
+                'display': 'block',
+                'position': 'relative'
+              ).height(maxHeight)
             )
           ).show().addClass('in')
           return self.each(->

@@ -4,7 +4,9 @@
       speed = @config.speed
       $(document).on('click', 'a[href^=#]', (event)->
         event.preventDefault()
-        href = $(this).attr('href')
+        elem = $(this)
+        if elem.data('slide') then return
+        href = elem.attr('href')
         target = $(if href == '#' then 'html' else href)
         if target.length < 1 then target = $('html')
         position = target.offset().top
