@@ -1,9 +1,7 @@
   class Scroll
-    _defaults =
-      'speed': 300
   
-    constructor:(speed)->
-      speed = speed? _defults.speed
+    constructor:(@config)->
+      speed = @config.speed
       $(document).on('click', 'a[href^=#]', (event)->
         event.preventDefault()
         href = $(this).attr('href')

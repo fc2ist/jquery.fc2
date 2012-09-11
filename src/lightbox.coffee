@@ -1,10 +1,7 @@
   class Lightbox
-    _defaults =
-      'opacity': 0.75
   
-    constructor:(target, options)->
+    constructor:(target, @config)->
       if target.data('lightbox') then return
-      @config = $.extend(_defaults, options)
       @target = target
       _build.apply(this)
     

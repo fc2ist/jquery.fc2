@@ -1,20 +1,9 @@
   class Pager
-  
-    _defaults =
-      'range': 10,
-      'totalData': 'total',
-      'currentData': 'current',
-      'dataName': 'pagination',
-      'skip': true,
-      'prev': "\u00ab",
-      'next': "\u00bb",
-      'className': null
     
     _notPage = /(^blog-entry-\d+\.html)|(^archives\.html)/
     _notQuery = /(&?no=\d+)|(&?all[=&]?)|(&?mode=edit(&.*)?)|(&?editor[=&]?)/
   
-    constructor:(target, options)->
-      @config = $.extend(_defaults, options)
+    constructor:(target, @config)->
       @target = target
   
       if @target.data(@config.dataName) then return

@@ -1,4 +1,4 @@
-/*! jQuery FC2 Plugin - v0.1.3 - 2012-09-10
+/*! jQuery FC2 Plugin - v0.1.3 - 2012-09-11
 * http://fc2ist.blog.fc2.com/
 * Copyright (c) 2012 @moi_fc2; Licensed MIT */
 
@@ -6,23 +6,82 @@
 (function($) {
   var Eyecatch, Lightbox, Pager, Scroll;
   $.fn.fc2 = (function() {
+    var _defaults;
+
+    _defaults = {
+      'eyecatch': {
+        'className': 'img-eyecatch',
+        'linkClassName': 'link-eyecatch',
+        'enoData': 'eno',
+        'titleData': 'title',
+        'dataName': 'eyecatch',
+        'fade': false,
+        'fadeSpeed': 300,
+        'carousel': '#index-carousel'
+      },
+      'pager': {
+        'range': 10,
+        'totalData': 'total',
+        'currentData': 'current',
+        'dataName': 'pagination',
+        'skip': true,
+        'prev': "\u00ab",
+        'next': "\u00bb",
+        'className': null
+      },
+      'lightbox': {
+        'opacity': 0.75
+      },
+      'scroll': {
+        'speed': 300
+      }
+    };
 
     function fc2() {
       var self;
       self = this;
       return {
         'eyecatch': function(options) {
+          var config;
+          config = $.extend(_defaults.eyecatch, options);
+          $(config.carousel).each(function() {
+            var $items;
+            $items = $('.item', this);
+            $items.eq(0).addClass('active');
+            return $items.each(function() {
+              var $item, $post, eno, eyecatch, optelem;
+              $item = $(this);
+              eno = $item.data('target');
+              $post = self.filter('[data-eno="' + eno + '"]');
+              if ($post.length) {
+                return;
+              }
+              optelem = $post.find('[data-' + config.dataName + ']:eq(0)');
+              if (!optelem.length) {
+                return;
+              }
+              eyecatch = optelem.data(config.dataName).split('%%');
+              if (!eyecatch.length) {
+                return;
+              }
+              return $('img.' + config.className, $item).attr('src', eyecatch.shift());
+            });
+          });
           return self.each(function() {
-            return new Eyecatch($(this), options);
+            return new Eyecatch($(this), config);
           });
         },
         'pager': function(options) {
+          var config;
+          config = $.extend(_defaults.pager, options);
           return self.each(function() {
-            return new Pager($(this), options);
+            return new Pager($(this), config);
           });
         },
         'lightbox': function(options) {
-          new Lightbox(self, options);
+          var config;
+          config = $.extend(_defaults.lightbox, options);
+          new Lightbox(self, config);
           return self;
         }
       };
@@ -38,7 +97,9 @@
       self = this;
       return {
         'scroll': function(options) {
-          new Scroll(options);
+          var config;
+          config = $.extend(_defaults.scroll, options);
+          new Scroll(config);
           return self;
         }
       };
@@ -48,17 +109,7 @@
 
   })();
   Eyecatch = (function() {
-    var _build, _defaults, _reg;
-
-    _defaults = {
-      'className': 'img-eyecatch',
-      'linkClassName': 'link-eyecatch',
-      'enoData': 'eno',
-      'titleData': 'title',
-      'dataName': 'eyecatch',
-      'fade': false,
-      'fadeSpeed': 300
-    };
+    var _build, _reg;
 
     _reg = /(^blog-entry-\d+\.html)|([&\?]?no=\d+)/;
 
@@ -112,8 +163,8 @@
       return optelem.remove();
     };
 
-    function Eyecatch(target, options) {
-      this.config = $.extend(_defaults, options);
+    function Eyecatch(target, config) {
+      this.config = config;
       this.target = target;
       _build.apply(this);
     }
@@ -122,25 +173,14 @@
 
   })();
   Pager = (function() {
-    var _bbq, _build, _defaults, _getURL, _info, _notPage, _notQuery;
-
-    _defaults = {
-      'range': 10,
-      'totalData': 'total',
-      'currentData': 'current',
-      'dataName': 'pagination',
-      'skip': true,
-      'prev': "\u00ab",
-      'next': "\u00bb",
-      'className': null
-    };
+    var _bbq, _build, _getURL, _info, _notPage, _notQuery;
 
     _notPage = /(^blog-entry-\d+\.html)|(^archives\.html)/;
 
     _notQuery = /(&?no=\d+)|(&?all[=&]?)|(&?mode=edit(&.*)?)|(&?editor[=&]?)/;
 
-    function Pager(target, options) {
-      this.config = $.extend(_defaults, options);
+    function Pager(target, config) {
+      this.config = config;
       this.target = target;
       if (this.target.data(this.config.dataName)) {
         return;
@@ -318,14 +358,11 @@
 
   })();
   Scroll = (function() {
-    var _defaults;
 
-    _defaults = {
-      'speed': 300
-    };
-
-    function Scroll(speed) {
-      speed = typeof speed === "function" ? speed(_defults.speed) : void 0;
+    function Scroll(config) {
+      var speed;
+      this.config = config;
+      speed = this.config.speed;
       $(document).on('click', 'a[href^=#]', function(event) {
         var href, position, target;
         event.preventDefault();
@@ -349,17 +386,13 @@
 
   })();
   return Lightbox = (function() {
-    var close, open, _build, _createBox, _createOverlay, _defaults, _load, _resize;
+    var close, open, _build, _createBox, _createOverlay, _load, _resize;
 
-    _defaults = {
-      'opacity': 0.75
-    };
-
-    function Lightbox(target, options) {
+    function Lightbox(target, config) {
+      this.config = config;
       if (target.data('lightbox')) {
         return;
       }
-      this.config = $.extend(_defaults, options);
       this.target = target;
       _build.apply(this);
     }

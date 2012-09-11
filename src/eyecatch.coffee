@@ -1,14 +1,5 @@
   class Eyecatch
-  
-    _defaults =
-      'className': 'img-eyecatch',
-      'linkClassName': 'link-eyecatch',
-      'enoData': 'eno',
-      'titleData': 'title',
-      'dataName': 'eyecatch',
-      'fade': false,
-      'fadeSpeed': 300
-      
+        
     _reg = /(^blog-entry-\d+\.html)|([&\?]?no=\d+)/
     
     _build = ->
@@ -46,8 +37,7 @@
         img.fadeTo(@config.fadeSpeed, 1)
         
       optelem.remove()
-  
-    constructor:(target, options)->
-      @config = $.extend(_defaults, options)
+
+    constructor:(target, @config)->
       @target = target
       _build.apply(this)
