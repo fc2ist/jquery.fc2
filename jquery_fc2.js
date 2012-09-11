@@ -1,41 +1,39 @@
-/*! jQuery FC2 Plugin - v0.1.3 - 2012-09-11
+/*! jQuery FC2 Plugin - v0.1.4 - 2012-09-11
 * http://fc2ist.blog.fc2.com/
 * Copyright (c) 2012 @moi_fc2; Licensed MIT */
 
 
 (function($) {
-  var Eyecatch, Lightbox, Pager, Scroll;
+  var Eyecatch, Lightbox, Pager, Scroll, _defaults;
+  _defaults = {
+    'eyecatch': {
+      'className': 'img-eyecatch',
+      'linkClassName': 'link-eyecatch',
+      'enoData': 'eno',
+      'titleData': 'title',
+      'dataName': 'eyecatch',
+      'fade': false,
+      'fadeSpeed': 300,
+      'carousel': '#index-carousel'
+    },
+    'pager': {
+      'range': 10,
+      'totalData': 'total',
+      'currentData': 'current',
+      'dataName': 'pagination',
+      'skip': true,
+      'prev': "\u00ab",
+      'next': "\u00bb",
+      'className': null
+    },
+    'lightbox': {
+      'opacity': 0.75
+    },
+    'scroll': {
+      'speed': 300
+    }
+  };
   $.fn.fc2 = (function() {
-    var _defaults;
-
-    _defaults = {
-      'eyecatch': {
-        'className': 'img-eyecatch',
-        'linkClassName': 'link-eyecatch',
-        'enoData': 'eno',
-        'titleData': 'title',
-        'dataName': 'eyecatch',
-        'fade': false,
-        'fadeSpeed': 300,
-        'carousel': '#index-carousel'
-      },
-      'pager': {
-        'range': 10,
-        'totalData': 'total',
-        'currentData': 'current',
-        'dataName': 'pagination',
-        'skip': true,
-        'prev': "\u00ab",
-        'next': "\u00bb",
-        'className': null
-      },
-      'lightbox': {
-        'opacity': 0.75
-      },
-      'scroll': {
-        'speed': 300
-      }
-    };
 
     function fc2() {
       var self;
@@ -66,7 +64,7 @@
               }
               return $('img.' + config.className, $item).attr('src', eyecatch.shift());
             });
-          });
+          }).show().addClass('in');
           return self.each(function() {
             return new Eyecatch($(this), config);
           });

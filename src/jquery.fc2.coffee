@@ -1,28 +1,28 @@
-  class $.fn.fc2
-    _defaults =
-      'eyecatch':
-        'className': 'img-eyecatch',
-        'linkClassName': 'link-eyecatch',
-        'enoData': 'eno',
-        'titleData': 'title',
-        'dataName': 'eyecatch',
-        'fade': false,
-        'fadeSpeed': 300,
-        'carousel': '#index-carousel',
-      ,'pager':
-        'range': 10,
-        'totalData': 'total',
-        'currentData': 'current',
-        'dataName': 'pagination',
-        'skip': true,
-        'prev': "\u00ab",
-        'next': "\u00bb",
-        'className': null
-      ,'lightbox':
-        'opacity': 0.75
-      ,'scroll':
-        'speed': 300
+  _defaults =
+    'eyecatch':
+      'className': 'img-eyecatch',
+      'linkClassName': 'link-eyecatch',
+      'enoData': 'eno',
+      'titleData': 'title',
+      'dataName': 'eyecatch',
+      'fade': false,
+      'fadeSpeed': 300,
+      'carousel': '#index-carousel',
+    ,'pager':
+      'range': 10,
+      'totalData': 'total',
+      'currentData': 'current',
+      'dataName': 'pagination',
+      'skip': true,
+      'prev': "\u00ab",
+      'next': "\u00bb",
+      'className': null
+    ,'lightbox':
+      'opacity': 0.75
+    ,'scroll':
+      'speed': 300
 
+  class $.fn.fc2
     constructor:->
       self = this
       return {
