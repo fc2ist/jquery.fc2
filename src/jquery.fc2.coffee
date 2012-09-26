@@ -42,27 +42,6 @@
               if !eyecatch.length then return
               $('img.' + config.className, $item).attr('src', eyecatch.shift())
             )
-            $images = $('img.' + config.className, this)
-            $imagelink = $images.parent('a')
-            $images.css(
-              'width': '100%',
-              'height': 'auto',
-              'position': 'absolute'
-            )
-            $images.imagesLoaded(->
-              maxHeight = 0
-              $images.each(->
-                maxHeight = Math.max(maxHeight, this.height)
-              )
-              $images.each(->
-                pos = (maxHeight - this.height)/2
-                $(this).css('top', pos + 'px')
-              )
-              $imagelink.css(
-                'display': 'block',
-                'position': 'relative'
-              ).height(maxHeight)
-            )
           ).show().addClass('in')
           return self.each(->
             new Eyecatch($(this), config)
@@ -79,7 +58,7 @@
           new Lightbox(self, config)
           return self
       }
-  
+
   class $.fc2
     constructor:->
       self = this

@@ -1,4 +1,4 @@
-/*! jQuery FC2 Plugin - v0.1.4 - 2012-09-11
+/*! jQuery FC2 Plugin - v0.1.4 - 2012-09-26
 * http://fc2ist.blog.fc2.com/
 * Copyright (c) 2012 @moi_fc2; Licensed MIT */
 
@@ -43,10 +43,10 @@
           var config;
           config = $.extend(_defaults.eyecatch, options);
           $(config.carousel).each(function() {
-            var $imagelink, $images, $items;
+            var $items;
             $items = $('.item', this);
             $items.eq(0).addClass('active');
-            $items.each(function() {
+            return $items.each(function() {
               var $item, $post, eno, eyecatch, optelem;
               $item = $(this);
               eno = $item.data('target');
@@ -63,29 +63,6 @@
                 return;
               }
               return $('img.' + config.className, $item).attr('src', eyecatch.shift());
-            });
-            $images = $('img.' + config.className, this);
-            $imagelink = $images.parent('a');
-            $images.css({
-              'width': '100%',
-              'height': 'auto',
-              'position': 'absolute'
-            });
-            return $images.imagesLoaded(function() {
-              var maxHeight;
-              maxHeight = 0;
-              $images.each(function() {
-                return maxHeight = Math.max(maxHeight, this.height);
-              });
-              $images.each(function() {
-                var pos;
-                pos = (maxHeight - this.height) / 2;
-                return $(this).css('top', pos + 'px');
-              });
-              return $imagelink.css({
-                'display': 'block',
-                'position': 'relative'
-              }).height(maxHeight);
             });
           }).show().addClass('in');
           return self.each(function() {
