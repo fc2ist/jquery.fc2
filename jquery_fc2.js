@@ -1,4 +1,4 @@
-/*! jQuery FC2 Plugin - v0.1.4 - 2012-09-26
+/*! jQuery FC2 Plugin - v0.1.5 - 2012-09-28
 * http://fc2ist.blog.fc2.com/
 * Copyright (c) 2012 @moi_fc2; Licensed MIT */
 
@@ -41,7 +41,7 @@
       return {
         'eyecatch': function(options) {
           var config;
-          config = $.extend(_defaults.eyecatch, options);
+          config = $.extend(options, _defaults.eyecatch);
           $(config.carousel).each(function() {
             var $items;
             $items = $('.item', this);
@@ -71,14 +71,14 @@
         },
         'pager': function(options) {
           var config;
-          config = $.extend(_defaults.pager, options);
+          config = $.extend(options, _defaults.pager);
           return self.each(function() {
             return new Pager($(this), config);
           });
         },
         'lightbox': function(options) {
           var config;
-          config = $.extend(_defaults.lightbox, options);
+          config = $.extend(options, _defaults.lightbox);
           new Lightbox(self, config);
           return self;
         }
@@ -96,7 +96,7 @@
       return {
         'scroll': function(options) {
           var config;
-          config = $.extend(_defaults.scroll, options);
+          config = $.extend(options, _defaults.scroll);
           new Scroll(config);
           return self;
         }

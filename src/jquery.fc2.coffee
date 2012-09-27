@@ -27,7 +27,7 @@
       self = this
       return {
         'eyecatch': (options)->
-          config = $.extend(_defaults.eyecatch, options)
+          config = $.extend(options, _defaults.eyecatch)
           $(config.carousel).each(->
             $items = $('.item', this)
             $items.eq(0).addClass('active')
@@ -48,13 +48,13 @@
           )
         ,
         'pager': (options)->
-          config = $.extend(_defaults.pager, options)
+          config = $.extend(options, _defaults.pager)
           return self.each(->
             new Pager($(this), config)
           )
         ,
         'lightbox': (options)->
-          config = $.extend(_defaults.lightbox, options)
+          config = $.extend(options, _defaults.lightbox)
           new Lightbox(self, config)
           return self
       }
@@ -64,7 +64,7 @@
       self = this
       return {
         'scroll': (options)->
-          config = $.extend(_defaults.scroll, options)
+          config = $.extend(options, _defaults.scroll)
           new Scroll(config)
           return self
       }
