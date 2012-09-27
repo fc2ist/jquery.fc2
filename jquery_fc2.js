@@ -41,7 +41,7 @@
       return {
         'eyecatch': function(options) {
           var config;
-          config = $.extend(options, _defaults.eyecatch);
+          config = $.extend(true, {}, _defaults.eyecatch, options);
           $(config.carousel).each(function() {
             var $items;
             $items = $('.item', this);
@@ -71,14 +71,14 @@
         },
         'pager': function(options) {
           var config;
-          config = $.extend(options, _defaults.pager);
+          config = $.extend(true, {}, _defaults.pager, options);
           return self.each(function() {
             return new Pager($(this), config);
           });
         },
         'lightbox': function(options) {
           var config;
-          config = $.extend(options, _defaults.lightbox);
+          config = $.extend(true, {}, _defaults.lightbox, options);
           new Lightbox(self, config);
           return self;
         }
@@ -96,7 +96,7 @@
       return {
         'scroll': function(options) {
           var config;
-          config = $.extend(options, _defaults.scroll);
+          config = $.extend(true, {}, _defaults.scroll, options);
           new Scroll(config);
           return self;
         }
